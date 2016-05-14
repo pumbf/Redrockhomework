@@ -7,7 +7,7 @@ class DB
 	private static $_db;			//单例
 	private $_connect;				//数据库
 	private $_data = array();		//数据
-	private $_table					//数据表名
+	private $_table;					//数据表名
 	private $_join = array(); 				//join
 	private $_field = array();		//字段
 	private $_condition = array();	//条件
