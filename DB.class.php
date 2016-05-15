@@ -1,7 +1,4 @@
 <?php
-namespace Core\DB;
-
-
 class DB
 {
 	private static $_db;			//单例
@@ -45,9 +42,9 @@ class DB
 	 * @return object   DB连接      
 	 */
 	static function getDb() {
-		if(self::$_db instanceof self) {	
+		if(!self::$_db instanceof self) {	
 			//提取config
-			require_once('Config.php');
+			$config = require_once('Config.php');
 			extract($config);
 			self::$_db = new DB($driver, $host, $dbname, $user, $password);
 		}
@@ -96,13 +93,13 @@ class DB
 	 * 初始化
 	 */
 	private function reset() {
-		$_connect;				
-		$_data = array();		
-		$_table	= '';				
-		$_join = array(); 				
-		$_field = array();		
-		$_condition = array();	
-		$_orderby = array();	
+		$this->_connect;				
+		$this->_data = array();		
+		$this->_table	= '';				
+		$this->_join = array(); 				
+		$this->_field = array();		
+		$this->_condition = array();	
+		$this->_orderby = array();	
 
 	}
 	function select() {
@@ -173,6 +170,7 @@ class DB
 
 		//组成sql语句
 		$sql = 'SELECT '.$filed.' FROM '.$this->_table.$join.$condition.$orderby;
+		echo
 		//执行查询
 		$result = $this->_connect->query($sql);
 		//初始化
@@ -199,7 +197,7 @@ class DB
 
 			foreach ($this->_data as $key => $value) {
 				$filed .= $key.',';
-				$Value .= addcslashes($value).',';
+				$Value .= '\''.addcslashes($value).'\',';
 			}
 			$filed = rtrim($filed, ',');
 			$Value = rtrim($Value, ',');
@@ -229,7 +227,7 @@ class DB
 			$data;
 			
 			foreach ($this->_data as $key => $value) {
-				$data .= $key.'='.addcslashes($value).',';
+				$data .= $key.'\'='.addcslashes($value).'\',';
 			}
 
 			$data = rtrim($data, ',');
