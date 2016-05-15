@@ -1,4 +1,6 @@
 <?php
+namespace Core;
+use \PDO;
 class DB
 {
 	private static $_db;			//单例
@@ -170,7 +172,7 @@ class DB
 
 		//组成sql语句
 		$sql = 'SELECT '.$filed.' FROM '.$this->_table.$join.$condition.$orderby;
-		echo
+		//echo $sql;
 		//执行查询
 		$result = $this->_connect->query($sql);
 		//初始化
